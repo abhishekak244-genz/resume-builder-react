@@ -1,0 +1,146 @@
+import React from 'react'
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { TextField } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+const steps = ['Basic Information', 'Contact Details', 'Educational Details' ,  'Review & Subumit'];
+
+function UserInput() {
+ const [activeStep, setActiveStep] = React.useState(0);
+ 
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  
+ 
+
+
+  const renderStepContent =(stepCount) =>{
+    switch(stepCount){
+      case 0 : return (
+        <div >
+          <h2>personal details</h2>
+          <div className='p-3 row'>
+            <TextField id="standard-basic-name" label="full-name" variant="standard" />
+            <TextField id="standard-basic-loc" label="loaction" variant="standard" /> <FormControl variant="standard" >
+        <InputLabel id="demo-simple-select-standard-label">Choose job title</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+        
+          label="Age"
+        >
+         
+          <MenuItem value={10}>Ten</MenuItem>
+          
+        </Select>
+      </FormControl>
+          </div>
+        </div>
+      )
+        case 1 : return (
+        <div >
+          <h2>Contact details</h2>
+          <div className='p-3 row'>
+            <TextField id="standard-basic-name" label="email" variant="standard" />
+            <TextField id="standard-basic-loc" label="contact number" variant="standard" />
+            <TextField id="standard-basic-loc" label="linnked link" variant="standard" />
+            <TextField id="standard-basic-loc" label="git hub link " variant="standard" />
+          </div>
+        </div>
+      )
+          case 2 : return (
+        <div >
+          <h2>Educational details</h2>
+          <div className='p-3 row'>
+            <TextField id="standard-basic-name" label="bachelor degree" variant="standard" />
+            <TextField id="standard-basic-loc" label="univercity/ collage name" variant="standard" />
+            <TextField id="standard-basic-loc" label="your of graducation" variant="standard" />
+            
+          </div>
+        </div>
+      )
+       case 3 : return (
+        <div >
+          <h2>Review & Subumit</h2>
+        <p> Our AI will genrate skills & summary according to your job role. cick the AI skill & summary  button to proceed  </p>
+        </div>
+      )
+      default : return null
+    }
+    
+  }
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Stepper activeStep={activeStep}>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+         
+
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      {activeStep === steps.length ? (
+        <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+            All steps completed - you&apos;re finished
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Box sx={{ flex: '1 1 auto' }} />
+            <Button >finish</Button>
+          </Box>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {/* render form according to activestep count */}
+          <Box>
+               {
+                renderStepContent(activeStep)
+               }
+            
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button>
+            <Box sx={{ flex: '1 1 auto' }} />
+           
+           {
+            activeStep === steps.length -1?
+            <button> GEnerate ai skill and summery</button>
+            :
+            <button onClick={handleNext}> next</button>
+           }
+          </Box>
+        </React.Fragment>
+      )}
+    </Box>
+  );
+}
+
+export default UserInput

@@ -1,10 +1,11 @@
 import React from 'react'
 import { ImMail, ImPhone ,ImWhatsapp, ImFacebook2 ,} from "react-icons/im";
 import { FaInstagram } from "react-icons/fa";
+import { purple } from '@mui/material/colors';
 
 function Footer() {
   return (
-    <div className='bg-purple text-white text-center' >
+    <div className=' text-white text-center' style={{backgroundColor:"purple"}} >
       <h2 className='fw-bold mb-4'>contact</h2>
       <p className='fs-5'>
         <ImMail className='me-2' />
