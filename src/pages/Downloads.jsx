@@ -1,27 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IoPlayBack } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { deleteDownloadResumeAPI, getDownloadResumeAPI } from '../services/allResumeApiService';
 
 function Downloads() {
+  const [allDownloads, setAllDownloads] = useState([])
+  console.log(allDownloads);
+
+  useEffect(()=>{
+    getAllDownloads()
+  },[])
+  
+
+  const getAllDownloads = async ()=>{
+    const result = await getDownloadResumeAPI()
+    if(result.status==200){
+      setAllDownloads(result.data)
+    }
+    
+
+  }
+  const removeDownloads = async (id) => {
+      await deleteDownloadResumeAPI (id)
+      getAllDownloads()
+    }
   return (
     <div className='container'>
       <div className='d-flex my-5 justify-content-between align-items-center  '>
         <h1 > download resume histroy</h1>
         <Link to={'/form'}>  <IoPlayBack/> back </Link>
-      </div>
-       <div className='row mb-4'>
-        <div className='col-lg-4'>
+      </div>  
+       <div className='row mb-5'>
+      {
+        allDownloads.length>0?
+        allDownloads?.map(resume =>(
+            <div key={resume?.id} className='col-lg-4 mb-3'>
           <div style={{height:"400px"}} className='shadow p-3 rounded'>
             <div className='d-flex justify-content-between align-items-center'>
-              <h5> Rewiew at time</h5>
-              <button className='btn fs-5 text-center '><MdDelete /></button>
+              <h5> Rewiew at :  {resume?.timeStamp}</h5>
+              <button onClick={() => removeDownloads(resume?.id)} className='btn fs-5 text-center '><MdDelete /></button>
             </div>
             <div className='mt-3 text-center'>
-              <img height={'300px'}  width={'200px'} src="https://img.lovepik.com/desgin_photo/45006/6736_list.jpg" alt="" />
+             <Link to={`/resume/${resume?.resumeId}/view`}> <img height={'300px'}  width={'200px'} src={resume?.resumeImg} alt="download cv image" /></Link>
             </div>
           </div>
         </div>
+        ))
+        :
+        <div className='text-center fw-bolder my-5'> no RESUME ARE DOWNLOAD YET!!!....</div>
+      }
        </div>
     </div>
   )

@@ -7,3 +7,16 @@ export const addResumeAPI = async(resumeData) =>{
 export const getResumeAPI = async(id) =>{
     return await apiService("GET",`/allResumes/${id}`,{})
 }
+
+// 
+export const downloadResumeApi = async(resumeData) =>{
+    return await apiService("POST","/downloads",resumeData)
+}
+
+export const getDownloadResumeAPI = async() =>{
+    return await apiService("GET","/downloads",{})
+}
+// delete reume downlad 
+export const deleteDownloadResumeAPI = async(resumeId) =>{
+    return await apiService("DELETE",`/downloads/${resumeId}`,{})
+}
