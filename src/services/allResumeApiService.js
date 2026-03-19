@@ -1,4 +1,5 @@
-import apiService from "../api/apiservice";
+import apiService from "../api/apiService"
+
 // post resume api called by userinput . when finish btn clicked 
 export const addResumeAPI = async(resumeData) =>{
     return await apiService("POST","/allResumes",resumeData)
