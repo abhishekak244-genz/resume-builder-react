@@ -7,6 +7,7 @@ import { MdEditDocument } from "react-icons/md";
 import { TextField, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import { FaXmark } from "react-icons/fa6";
 import jobTypes from '../assets/jobRole.json'
+import { editResumeApi } from '../services/allResumeApiService';
 
 const style = {
     position: 'absolute',
@@ -46,7 +47,24 @@ function Edit({ resumeDate, setResumeDate }) {
             alert("input valid skill")
         }
     }
-
+      const handleEditResume = async () =>{
+         const { fullName ,loaction,job,email,phone,linkedIn,gitHub,degree, university , passOut , skill, summary} = 
+            resumeDate
+            if(fullName && loaction && job && email && phone && linkedIn && gitHub && degree && university && passOut && skill.length > 0 && summary){
+            //   api call 
+            const response =  await editResumeApi(resumeDate?.id,resumeDate)
+            console.log(response);
+            if(response.status==200){
+               alert("resume updated")
+               handleClose()
+            }
+              else {
+                alert("please fill the form completely !!")
+              }
+              
+        
+            }
+      }
 
     return (
         <div>
@@ -131,7 +149,7 @@ function Edit({ resumeDate, setResumeDate }) {
                             </div>
                         </div>
                         {/* upadte */}
-                        <button className='btn btn-primary'> update</button>
+                        <button onClick={handleEditResume} className='btn btn-primary'> update</button>
                     </Box>
                 </Box>
             </Modal>
